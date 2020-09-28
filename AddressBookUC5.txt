@@ -1,0 +1,137 @@
+import java.util.Scanner;
+
+public class Address_Book_Main {
+	
+	public Contact[] contact;
+	public Address_Book_Main() {
+		contact = new Contact[5];
+	}
+	int numOfContacts=0;
+	public void add_Contact(Contact c) {
+		contact[numOfContacts] = c;
+		numOfContacts++;
+	}
+	public void displayAllContacts() {
+		for(int i=0;i<numOfContacts;i++) {
+			System.out.println(contact[i]);
+		}
+	}
+	public int check(String s) {
+		int flag = 100;
+		for(int i =0; i<numOfContacts;i++) {
+			if(s==contact[i].f_Name) 
+				flag = i;
+		}
+		return flag;
+	}
+	public Contact info() {
+		Scanner sc = new Scanner(System.in);
+		//System.out.println("Welcome to Address Book");
+		System.out.println("Enter first name: ");
+		String f_name = sc.nextLine();
+		System.out.println("Enter Last Name : ");
+		String l_name = sc.nextLine();
+		System.out.println("Enter Address : ");
+		String address = sc.nextLine();
+		System.out.println("Enter City : ");
+		String city = sc.nextLine();
+		System.out.println("Enter State : ");
+		String state = sc.nextLine();
+		System.out.println("Enter Zip : "); 
+		int zip = sc.nextInt();sc.nextLine();
+		System.out.println("Enter Phone Number : ");
+		int phone_Number= sc.nextInt(); sc.nextLine();
+		System.out.println("Enter email : ");
+		String email = sc.nextLine();
+		Contact c= new Contact(f_name,l_name,address,city,state,zip,phone_Number,email);
+		return c;
+	}
+	public void edit (int index) {
+		contact[index] = info();
+	}
+	public void delete(int index) {
+		for(int i = index;i< numOfContacts-1;i++) {
+			contact[i]=contact[i+1];
+		}
+		numOfContacts=numOfContacts-1;
+	}
+	
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int option = 1;
+		Address_Book_Main address_Book_Main = new Address_Book_Main();
+		while(option!=0) {
+			System.out.println("1. Add");
+			System.out.println("2. Edit");
+			System.out.println("3. Delete");
+			System.out.println("4. Display");
+			option = s.nextInt(); s.nextLine();
+			switch(option) {
+			case 1:
+				address_Book_Main.add_Contact(address_Book_Main.info());
+				break;
+			case 2:
+				System.out.println("Enter f_name you want to edit");
+				String f_name=s.nextLine();
+				int info = address_Book_Main.check(f_name);
+				if (info == 100) { 
+					System.out.println("Contact not found");
+					break;
+				}
+				else {
+				address_Book_Main.edit(info);
+				}
+				break;
+			case 3 :
+				System.out.println("Enter f_name you want to delete: ");
+				String f1_name = s.nextLine();
+				int info1 = address_Book_Main.check(f1_name);
+				if(info1==100) {
+					System.out.println("Contact not found");
+					break;
+				}
+				else {
+					address_Book_Main.delete(info1);
+				}
+				break;
+			case 4:
+				address_Book_Main.displayAllContacts();
+				break;
+				
+			}
+		}
+		
+	}	
+}
+
+
+
+class Contact{
+	String f_Name;
+	String l_Name;
+	String address;
+	String city;
+	String state;
+	int zip;
+	int phone_Number;
+	String email;
+	
+	public Contact(String f_Name, String l_Name, String address, String city, String state, int zip, int phone_Number,
+			String email) {
+		super();
+		this.f_Name = f_Name;
+		this.l_Name = l_Name;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.phone_Number = phone_Number;
+		this.email = email;
+	}	
+	@Override
+	public String toString() {
+		return ("Name : "+f_Name+"Last name : "+l_Name+" Address : "+address+" City : "+city+" State: "+state+" Zip Code: "+zip+" Phone Number : "+ phone_Number+" Email Id : "+email);
+		
+	}
+}
